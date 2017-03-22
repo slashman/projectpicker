@@ -27,7 +27,10 @@
 		this.projects = opts.projects;
 		add(e) {
 			e.preventDefault();
-			var projectName = this.refs.input.value;
+			var projectName = this.refs.input.value.trim();
+			if (projectName === ""){
+				return;
+			}
 			this.refs.input.value = '';
 			this.projects.push({ name: projectName });
 			globalEvents.trigger('projectsChanged', this.projects);
