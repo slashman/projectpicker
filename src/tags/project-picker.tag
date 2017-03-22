@@ -2,6 +2,15 @@
 	<peer-ball projects={projects}></peer-ball>
 	<projects projects={projects}></projects>
 	<script>
-		this.projects = [];
+		var storedData = localStorage.getItem('projectPickerData');
+		if (!storedData){
+			this.projects = [];		
+		} else {
+			this.projects = JSON.parse(storedData);
+		}
+
+		globalEvents.on('projectsChanged', function(projects){
+			localStorage.setItem("projectPickerData", JSON.stringify(projects));
+		});
 	</script>
 </project-picker>
