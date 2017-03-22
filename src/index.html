@@ -1,8 +1,46 @@
 <html>
-<body>
+<head>
+	<style>
+		body {
+			font-family: sans-serif;
+			font-size: 14px;
+		}
 
-<!-- mount point -->
-<project-picker/>
+		.container {
+			width: 300px;
+			margin-right: auto;
+			margin-left: auto;
+			text-align: center;
+		}
+
+		button {
+		    background-color: #555555;
+		    border: none;
+		    color: white;
+		    padding: 15px 32px;
+		    text-align: center;
+		    text-decoration: none;
+		    display: inline-block;
+		    font-size: 16px;
+		}
+
+		input{
+			padding: 10px;
+			border: solid 1px #dcdcdc;
+			transition: box-shadow 0.3s, border 0.3s;
+		}
+		input:focus,
+		input.focus {
+		    border: solid 1px #707070;
+  			box-shadow: 0 0 5px 1px #969696;
+		}
+	</style>
+</head>
+<body>
+<div class="container">
+	<!-- mount point -->
+	<project-picker/>
+</div>
 
 <!-- include riot.js only -->
 <script src="https://cdn.jsdelivr.net/riot/3.2/riot.min.js"></script>

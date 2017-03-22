@@ -1,12 +1,28 @@
 <projects>
 	<form onsubmit = {add}>
-		<p>Add new: <input ref="input"/></p>
-		<p><button>Add project</button></p> 
+		<p>Add project: <input ref="input"/></p>
+		<p><button>Add</button></p> 
 	</form>
-	<li each={ projects }>
-      {name} <button onclick={remove}>X</button>
-    </li>
+	<div class = "projectRow" each={ projects }>
+		<div class = "projectName">{name}</div>
+		<div class = "buttonColumn"><button onclick={remove}>X</button></div>
+    </div>
+    <style>
+    	.projectRow {
+    		margin: 20px;
+    	}
 
+    	.projectName {
+    		display: inline-block;
+    		width: 70%;
+    	}
+
+    	.buttonColumn {
+    		display: inline-block;
+    		width: 10%;
+    		vertical-align: top;
+    	}
+    </style>
 	<script>
 		this.projects = opts.projects;
 		add(e) {
