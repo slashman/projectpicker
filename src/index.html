@@ -1,0 +1,21 @@
+<html>
+<body>
+
+<!-- mount point -->
+<project-picker/>
+
+<!-- include riot.js only -->
+<script src="https://cdn.jsdelivr.net/riot/3.2/riot.min.js"></script>
+
+<!-- include pre-compiled tags (normal javascript) -->
+<script src="projectpicker-tags.js"></script>
+
+<!-- mount the same way -->
+<script>
+var globalEvents = riot.observable()
+riot.mount('*')
+</script>
+
+
+</body>
+</html>
