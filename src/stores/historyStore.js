@@ -3,35 +3,38 @@
  */
 
 function HistoryStore() {
-	riot.observable(this);
+	const self = this;
+	riot.observable(self);
 	var storedData = localStorage.getItem('projectPickerHistory');
 	if (!storedData){
-		this.history = [];
+		self.history = [];
 	} else {
-		this.history = JSON.parse(storedData);
+		self.history = JSON.parse(storedData);
 	}
 
-	this.on("project-selected", function(project){
+	function historyChanged(history){
+		self.history = history;
+		localStorage.setItem("projectPickerHistory", JSON.stringify(history));
+	}
+
+	self.on("project-selected", function(project){ // Result action from other store
 		console.log("project-selected on HistoryStore", project);
-		const newHistory = this.history.slice(0);
+		const newHistory = self.history.slice(0);
 		newHistory.push({name: project.name, time: new Date()});
+		historyChanged(newHistory);
 		RiotControl.trigger("history-changed", newHistory);
 	});
 	
-	this.on("history-changed", function(history){
-		console.log("history-changed on HistoryStore", history);
-		this.history = history;
-		localStorage.setItem("projectPickerHistory", JSON.stringify(history));
+	self.on("get-history", function(){
+		console.log("get-history on HistoryStore");
+		RiotControl.trigger("history-changed", self.history);
 	});
 
-	this.on("refresh-history", function(){
-		console.log("refresh-history on HistoryStore");
-		RiotControl.trigger("history-changed", this.history);
-	});
-
-	this.on("clear-history", function(){
+	self.on("clear-history", function(){
 		console.log("clear-history on HistoryStore");
-		RiotControl.trigger("history-changed", []);
+		const newHistory = [];
+		historyChanged(newHistory);
+		RiotControl.trigger("history-changed", newHistory);
 	});
 }
 

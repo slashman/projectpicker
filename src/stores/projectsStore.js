@@ -3,46 +3,48 @@
  */
 
 function ProjectsStore() {
-	riot.observable(this);
+	const self = this;
+	riot.observable(self);
 	var storedData = localStorage.getItem('projectPickerData');
 	if (!storedData){
-		this.projects = [];
+		self.projects = [];
 	} else {
-		this.projects = JSON.parse(storedData);
+		self.projects = JSON.parse(storedData);
 	}
 
-	this.on("add-project", function(projectData){
+	function projectsChanged(projects){
+		self.projects = projects;
+		localStorage.setItem("projectPickerData", JSON.stringify(projects));
+	};
+
+	self.on("add-project", function(projectData){
 		console.log("add-project on ProjectsStore", projectData);
-		const newProjects = this.projects.slice(0);
+		const newProjects = self.projects.slice(0);
 		newProjects.push({ name: projectData.name });
+		projectsChanged(newProjects);
 		RiotControl.trigger("projects-changed", newProjects);
 	});
 
-	this.on("remove-project", function(nameToRemove){
+	self.on("remove-project", function(nameToRemove){
 		console.log("remove-project on ProjectsStore", nameToRemove);
-		const newProjects = this.projects.filter(function(project) { return nameToRemove !== project.name;});
+		const newProjects = self.projects.filter(function(project) { return nameToRemove !== project.name;});
+		projectsChanged(newProjects);
 		RiotControl.trigger("projects-changed", newProjects);
 	});
 
-	this.on("select-project", function(){
+	self.on("select-project", function(){
 		console.log("select-project on ProjectsStore");
-		if (this.projects.length === 0){
+		if (self.projects.length === 0){
 			RiotControl.trigger("no-project-available");
 		} else {
-			const selectedProject = this.projects[Math.floor(Math.random()*this.projects.length)];
+			const selectedProject = self.projects[Math.floor(Math.random()*self.projects.length)];
 			RiotControl.trigger("project-selected", selectedProject);
 		}
 	});
 
-	this.on("projects-changed", function(projects){
-		console.log("projects-changed on ProjectsStore", projects);
-		this.projects = projects;
-		localStorage.setItem("projectPickerData", JSON.stringify(projects));
-	});
-
-	this.on("refresh-projects", function(){
-		console.log("refresh-projects on ProjectsStore");
-		RiotControl.trigger("projects-changed", this.projects);
+	self.on("get-projects", function(){
+		console.log("get-projects on ProjectsStore");
+		RiotControl.trigger("projects-changed", self.projects);
 	});
 }
 

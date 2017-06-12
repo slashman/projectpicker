@@ -28,6 +28,7 @@
 			this.history = history;
 			this.update();
 		});
-		RiotControl.trigger("refresh-history");
+		
+		RiotControl.trigger("get-history");
 	</script>
 </history>
