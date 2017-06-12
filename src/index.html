@@ -48,6 +48,7 @@
 <script src="riotControl.js"></script>
 
 <script src="stores/projectsStore.js"></script>
+<script src="stores/historyStore.js"></script>
 
 <!-- include pre-compiled tags (normal javascript) -->
 <script src="projectpicker-tags.js"></script>
@@ -56,7 +57,9 @@
 <!-- mount the same way -->
 <script>
 const projectsStore = new ProjectsStore();
+const historyStore = new HistoryStore();
 RiotControl.addStore(projectsStore);
+RiotControl.addStore(historyStore);
 riot.mount('*')
 </script>
 
