@@ -45,13 +45,18 @@
 
 <!-- include riot.js only -->
 <script src="https://cdn.jsdelivr.net/riot/3.2/riot.min.js"></script>
+<script src="riotControl.js"></script>
+
+<script src="stores/projectsStore.js"></script>
 
 <!-- include pre-compiled tags (normal javascript) -->
 <script src="projectpicker-tags.js"></script>
 
+
 <!-- mount the same way -->
 <script>
-var globalEvents = riot.observable()
+const projectsStore = new ProjectsStore();
+RiotControl.addStore(projectsStore);
 riot.mount('*')
 </script>
 

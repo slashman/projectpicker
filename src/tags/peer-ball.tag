@@ -30,19 +30,16 @@
 
 	</style>
 	<script>
-		this.projects = opts.projects;
+		RiotControl.addStore(this);
 		this.selectedProjectText = "Peer into the magic ball to see what project you should work on."
 		selectProject(e){
-			if (this.projects.length === 0){
-				this.selectedProjectText = "You must add some projects first"
-				return;
-			}
-			const selectedProject = this.projects[Math.floor(Math.random()*this.projects.length)];
-			this.selectedProjectText = "You must work on... "+selectedProject.name;
+			RiotControl.trigger("select-project");
 		}
-		// riot.observable(this);
-		globalEvents.on('projectsChanged', function(projects){
-			this.projects = projects;
-		}.bind(this))
+		this.on("project-selected", function(selectedProject){
+			this.selectedProjectText = "You must work on... "+selectedProject.name;
+		})
+		this.on("no-project-available", function(){
+			this.selectedProjectText = "You must add some projects first"
+		});
 	</script>
 </peer-ball>

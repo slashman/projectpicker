@@ -24,6 +24,7 @@
     	}
     </style>
 	<script>
+		RiotControl.addStore(this);
 		this.projects = opts.projects;
 		add(e) {
 			e.preventDefault();
@@ -32,18 +33,17 @@
 				return;
 			}
 			this.refs.input.value = '';
-			this.projects.push({ name: projectName });
-			globalEvents.trigger('projectsChanged', this.projects);
+			RiotControl.trigger('add-project', { name: projectName });
 		}
 
 		remove(e){
 			const nameToRemove = e.item.name;
-			const newProjects = this.projects.filter(function(project) { return nameToRemove !== project.name;});
-			globalEvents.trigger('projectsChanged', newProjects);
+			RiotControl.trigger('remove-project', nameToRemove);
 		}
 
-		globalEvents.on('projectsChanged', function(projects){
+		this.on('projects-changed', function(projects){
 			this.projects = projects;
 		}.bind(this));
+		RiotControl.trigger("refresh-projects");
 	</script>
 </projects>
