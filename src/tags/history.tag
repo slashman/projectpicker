@@ -24,6 +24,7 @@
 		}
 
 		this.on('history-changed', function(history){
+			console.log("history-changed on history.tag", history);
 			this.history = history;
 			this.update();
 		});

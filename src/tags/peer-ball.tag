@@ -36,9 +36,11 @@
 			RiotControl.trigger("select-project");
 		}
 		this.on("project-selected", function(selectedProject){
+			console.log("project-selected on peer-ball.tag", selectedProject);
 			this.selectedProjectText = "You must work on... "+selectedProject.name;
 		})
 		this.on("no-project-available", function(){
+			console.log("no-project-available on peer-ball.tag");
 			this.selectedProjectText = "You must add some projects first"
 		});
 	</script>

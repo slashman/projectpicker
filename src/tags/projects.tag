@@ -42,6 +42,7 @@
 		}
 
 		this.on('projects-changed', function(projects){
+			console.log("projects-changed on projects.tag", projects);
 			this.projects = projects;
 		}.bind(this));
 		RiotControl.trigger("refresh-projects");
